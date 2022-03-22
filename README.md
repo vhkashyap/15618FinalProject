@@ -16,6 +16,10 @@ We feel that using the malloc code from the 213 course is a good starting point 
 ### Goals and Deliverables
 
 1. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing.
-2. Detailed analysis of the different customized malloc implmentations available such as jemalloc, tcmalloc, hoard allocator etc. to understand the advantages, disadvantages and how they are different from the conventional implmentation of malloc.
-3. Identifying the pitfalls from the above allocators and trying to implement a version of malloc which overcomes some of these downsides. 
-4. Improve the malloc implmented in the previous step by parallelizing portions of it to obtain significant speedup.
+2. Try the implmented data structure with machines of different architecutres such as the GHC, PSC, Shark machines.
+3. Write test scripts or modify the existing 213 trace files in order to have a complete testing infrastructure.
+4. Detailed analysis of the different customized malloc implmentations available such as jemalloc, tcmalloc, hoard allocator etc. to understand the advantages, disadvantages and how they are different from the conventional implmentation of malloc.
+5. Identifying the pitfalls from the above allocators and trying to implement a version of malloc which overcomes some of these downsides. 
+6. Improve the malloc implmented in the previous step by parallelizing portions of it.
+7. Scale up parallelization in order to obtain significant speedup all while reducing contention in a shared memory environment.
+8. Use data structures other than linked list and observe how well/worse the allocator works.
