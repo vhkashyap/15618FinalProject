@@ -12,3 +12,10 @@ Based on the shortcomings of these custom memory allocators, we plan to implemen
 The first challenge would be to adopt the different implementations of malloc, check the feasibility with the test scripts and performance tools to identify the shortcomings of each implementation. The other challenge is to implement the malloc itself by making it thread safe as well as to use minimal locks while accessing the linked list. 
 
 We feel that using the malloc code from the 213 course is a good starting point in terms of the implementation itself. The challenge here though would be the testing scripts, comparing performance on different machines and to develop a solution that suits most problem statements in terms of performance. Parallelizing this implementation to restrict contention along with maximizing the throughput and reducing fragmentation is an uphill task. 
+
+### Goals and Deliverables
+
+1. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing.
+2. Detailed analysis of the different customized malloc implmentations available such as jemalloc, tcmalloc, hoard allocator etc. to understand the advantages, disadvantages and how they are different from the conventional implmentation of malloc.
+3. Identifying the pitfalls from the above allocators and trying to implement a version of malloc which overcomes some of these downsides. 
+4. Improve the malloc implmented in the previous step by parallelizing portions of it to obtain significant speedup.
