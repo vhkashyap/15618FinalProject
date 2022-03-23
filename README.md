@@ -23,3 +23,19 @@ We feel that using the malloc code from the 213 course is a good starting point 
 6. Improve the malloc implmented in the previous step by parallelizing portions of it.
 7. Scale up parallelization in order to obtain significant speedup all while reducing contention in a shared memory environment.
 8. Use data structures other than linked list and observe how well/worse the allocator works.
+
+### Platform Choice
+
+We intend to use the GHC machines for development and do a comparison based on architecture using the shark machines as well as the PSC machines and if possible on the laptops which we use as well.
+
+
+### Schedule
+
+| Week | Goal |  
+|---|---|
+| 1  | To modify the 213 malloc code and begin lock free implmentation of linked list  |  
+| 2  | Achieve lock free/ reduced number of locks in a linked list and integrate with malloc code | 
+| 3  | Study the existing implmentations of parallel malloc and list out the ups and downs of each  | 
+| 4  | Parallelize the memory allocator from week 2 and build test scripts to validate the same  | 
+| 5  | Optimize and validate the implmentation with the test scripts/ trace files  | 
+
