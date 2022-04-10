@@ -33,7 +33,8 @@ We intend to use the GHC machines for development and do a comparison based on a
 
 | Week | Goal |  
 |---|---|
-| 1  | To modify the 213 malloc code and begin lock free implmentation of linked list  |  
+| 1  | Make the 213 malloc code threadsafe and modify the mdriver to spawn threads for each trace   | 
+| 2  | Continue to modify driver for timing and utilization analysis. Literature review for existing all allocators to understand their implementation and pitfalls|
 | 2  | Achieve lock free/ reduced number of locks in a linked list and integrate with malloc code | 
 | 3  | Study the existing implmentations of parallel malloc and list out the ups and downs of each  | 
 | 4  | Parallelize the memory allocator from week 2 and build test scripts to validate the same  | 
