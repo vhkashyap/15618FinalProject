@@ -53,5 +53,24 @@ The Hoard Allocator mainly addresses 3 negative aspects of conventional memory a
 * False Sharing - Threads on different CPUs can end up with memory in the same cache line. Say two processors access different parts of the same cache line. Although they do not modify each others data, the fact that it is being shared can cause the processor to reload the entire line each time which takes 100s of cycles more. This is false sharing and is designed to be prevented using a Hoard Allocator.
 * Blowup - This is a scenario when the memory consumption is much more than the actual required memory. This can also be prevented using a Hoard allocator.
 
+### **JEMalloc**
+This is another general purpose memory allocator which emphasizes on avoiding fragmentation and allows for concurrency which can be scaled up. JEMalloc uses different arenas and thread local caches to avoid contention and uses red black trees and an optimized slab allocator to avoid fragmentation. [2]
+
+### **TCMalloc**
+TCMalloc assigns each thread a thread-local cache. Small allocations are satisfied from the thread-local cache. Objects are moved from central data structures into a thread-local cache as needed, and periodic garbage collections are used to migrate memory back from a thread-local cache into the central data structures. [4]
+
+![image](https://user-images.githubusercontent.com/80923050/162667535-ac1538b8-75a6-4a9d-8fc9-73d0f0e15c68.png)
+
+TCMalloc performs the action of allocation based on the size of the request. If the requested data is below a certain threshold, then the allocator services it from the local thread cache and if this request is above a certain threshold, then it services it from the central heap as show in the above diagram. 
+
+This allocation of small sized objects is somewhat closely related to the 213 implementation of segregated lists. TCMalloc allocates a class to an object based on the range of size it falls under. For instance if the size of the object is 963 bytes, it is rounded up to the next available class of 1024 bytes. This is the idea behind a segregated list as well. <br/>
+For larger object sizes, the same idea is scaled up to pages. The heap managed by TCMalloc consists of a set of pages. A run of contiguous pages is represented by a Span object. A span can either be allocated, or free. If free, the span is one of the entries in a page heap linked-list. If allocated, it is either a large object that has been handed off to the application, or a run of pages that have been split up into a sequence of small objects. If split into small objects, the size-class of the objects is recorded in the span. [4]
+When an object is deallocated, the corresponding span object is looked up. This provides the information regarding the object size regarding which class it belongs to or which page it belongs to in case they are large objects. In case these are small objects, the chunk of memory is added to the free objects list in the linked list of the per thread cache. In case it is above a certain size, then a garbage collector is run from time to time which moves the unused objects to the central free list. <br/>
+
+Given these features of TCMalloc and the baseline infrastructure setup of our malloc drawn from 213 base code implementation, we believe that this is the way forward. We would ideally want to somehow integrate TCMalloc to our infrastructure as well develop our version of malloc further by implmenting lock free data structures and then proceed with further optimizations in order to compare this with TCMalloc. 
+
+
 ## References
-[1] https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf
+[1] https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf <br/>
+[2] https://codearcana.com/posts/2012/05/11/analysis-of-a-parallel-memory-allocator.html <br/>
+[3] https://github.com/jemalloc/jemalloc <br/>
