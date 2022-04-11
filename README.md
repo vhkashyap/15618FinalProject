@@ -43,3 +43,15 @@ We intend to use the GHC machines for development and do a comparison based on a
 
 Following our schedule, we started by modifying the 213 code to setup the infrastructure for further development. The main idea here before trying to implment lock free linked lists was to first implement multithreading by naively locking the data structures. Although the 213 code has mini blocks as well as segmented lists, we use a common global lock to ensure that if each thread picks up a trace and validates it, we are still able to obtain the correct results. After having these global locks for the data structures, the next part of it was to emulate the same for calculating utilization and time taken. Utilization was fairly straightforward as compared to the timing calculation whose implementation in the 213 code was not thread safe. So we went ahead and made it thread safe and compare the serialized code with the multithreaded locked version. The challenging part of it was to understand the mdriver file itself which took us a few days to know what is going on before we could modify it. 
 
+The next part of our work involved studying existing memory allocators. We went through the documentation details regarding the hoard allocator, TCMalloc and JEMalloc. Each of them have slightly different approaches to a common problem of memory allocation taking a very long time and thus creating a bottleneck in terms of performance. Listed below are some of the distinct features and takeaways from studying these allocators.
+
+### **Hoard Allocator**
+Hoard maintains per-processor heaps and one global heap. When a per-processor heap’s usage drops below a certain fraction, Hoard transfers a large fixed size chunk of its memory from the per-processor heap to the global heap, where it is then available for reuse by another processor. [1]
+
+The Hoard Allocator mainly addresses 3 negative aspects of conventional memory allocations being
+* Contention - When multiple threads allocate and deallocate memory, most allocators serialize this which is the primary bottleneck. This causes contention and the hoard allocator eliminates this bottleneck.
+* False Sharing - Threads on different CPUs can end up with memory in the same cache line. Say two processors access different parts of the same cache line. Although they do not modify each others data, the fact that it is being shared can cause the processor to reload the entire line each time which takes 100s of cycles more. This is false sharing and is designed to be prevented using a Hoard Allocator.
+* Blowup - This is a scenario when the memory consumption is much more than the actual required memory. This can also be prevented using a Hoard allocator.
+
+## References
+[1] https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf
