@@ -69,6 +69,13 @@ When an object is deallocated, the corresponding span object is looked up. This 
 
 Given these features of TCMalloc and the baseline infrastructure setup of our malloc drawn from 213 base code implementation, we believe that this is the way forward. We would ideally want to somehow integrate TCMalloc to our infrastructure as well develop our version of malloc further by implmenting lock free data structures and then proceed with further optimizations in order to compare this with TCMalloc. 
 
+### **Lock Free Implementatiopm**
+The current thread safe version of our custom malloc has been implemented naively using single mutex locks around the critical section. As this implentation creates a major bottleneck in a mutithreaded process, our next step would be to modify the current thread-safe code to make major portions of the code flow lock free. We are planning to achieve this by following the atomic compare-and-swap method as covered in the PCA lectures. Our custom malloc consists of segregated free lists along with a singly linked free list to store the mini blocks. The lists are not the only shared structures in our implementation. Considering this, the challenges we are likely to face while adopting a lock-free implementation are:
+
+1. For every malloc and free request, the block headers have to be modified right after inserting or deleting a node from the list. As the heap is a shared structure, this operation too belongs to the critical section. Avoiding locks for the same would require an approach different from the conventional use of CAS. 
+2. To optimize memory utilization, we perform coalescing after every free and malloc request. As coalescing is part of the criticial section, we need to check the possibility of using CAS for this part of the code and analyse the complexity of it's implementation. We will also try to explore other ways to emliminate locks given the scenario that CAS is not suitable.  
+3. Other than eliminating locks,the existing malloc code need to be modified in order to make a lock free implementation possible. We will also need to analyze how the future modification would impact the malloc performance in terms of utilization and throughput.
+4. As we are dealing with stacks here, one of the major concerns is the ABA problem which needs to be catered for during the CAS implemention.
 
 ## References
 [1] https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf <br/>
