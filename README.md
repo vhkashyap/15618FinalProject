@@ -77,6 +77,40 @@ The current thread safe version of our custom malloc has been implemented naivel
 3. Other than eliminating locks,the existing malloc code need to be modified in order to make a lock free implementation possible. We will also need to analyze how the future modification would impact the malloc performance in terms of utilization and throughput.
 4. As we are dealing with stacks here, one of the major concerns is the ABA problem which needs to be catered for during the CAS implemention.
 
+### **Updated Goals and Deliverables**
+
+We see the progress so far to be on track with respect to what we planned to achieve. Although this is true, we felt that it was better to revisit our goals given that we now have a clearer picture in terms of understanding the challenges, the amount of work that is needed for adaption, literature survey and other such tasks revolving around this project. Listed below are the goals and deliverables:
+
+_Plan to achieve_
+
+1. Write test scripts or modify the existing 213 trace files in order to have a complete testing infrastructure.
+2. Literature survey on lock free data structures, ABA problem, memory allocators and hazard pointers.
+3. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing.
+4. Try the implmented data structure with machines of different architecutres such as the GHC, PSC, Shark machines.
+5. Compare the implementation of our memory allocator with TCMalloc and the baseline implementaion and draw inferences from the same regarding different performance metrics.
+
+_Hope to achieve_
+
+1. Thread local linked lists to reduce contention and false sharing.
+2. Based on the performance analysis of our allocator v/s TCMalloc, we plan to optimize the code to perform better or understand the gap between our implementation and TCMalloc.
+
+_Poster Session_
+
+We see the poster session to be an opportunity for us to explain the different approaches taken as well as to have sufficient data and comparison charts showing the performance of the baseline malloc, TCMalloc and our version of the updated malloc in terms of different metrics. This will also hopefully be extended to check performance on different machines and try to infer results from here as well. 
+
+### **Timeline**
+
+| Dates      | Task | Completion status    |
+| :---        |    :----:   |          ---: |
+| 12/4 - 14/4      | Literature review for lock-free implementation to build on PCA lectures    |  |
+| 15/4 - 16/4 | Modifying the baseline implementation of malloc code to adopt CAS implementation        |      |
+| 17/4 - 22/4   | CAS implementation for linked lists and stacks along with tackling the ABA problem       |      |
+| 23/4 - 24/4   | Run performance analysis        |       |
+| 25/4 - 27/4   | Decide further optimizations based on current performance        |      |
+| 28/4 - 29/4   | Write extensive final report        |      |
+
+
+
 ## References
 [1] https://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf <br/>
 [2] https://codearcana.com/posts/2012/05/11/analysis-of-a-parallel-memory-allocator.html <br/>
