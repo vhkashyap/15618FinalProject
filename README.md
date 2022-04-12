@@ -47,11 +47,11 @@ Following our schedule, we started by modifying the 213 code to setup the infras
 
 | ![SerialPosted](https://user-images.githubusercontent.com/80923050/162853925-5928e09f-f018-4847-a872-803ba451043e.png) |
 |:--:|
-| *Serial malloc implementation results* |
+| *Serial malloc implementation* |
 
 | ![Thread safe Parallel malloc with mutex](https://user-images.githubusercontent.com/81193326/162853345-e342e38f-a65e-4941-8ce7-9fe0a8e93a33.jpg) |
 |:--:|
-| *Thread safe parallel malloc using mutex results* |
+| *Thread safe parallel malloc using mutex* |
 
 
 
