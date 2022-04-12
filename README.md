@@ -33,8 +33,8 @@ We intend to use the GHC machines for development and do a comparison based on a
 
 | Week | Goal |  
 |---|---|
-| 1  | Make the 213 malloc code threadsafe and modify the mdriver to spawn threads for each trace   | 
-| 2  | Continue to modify driver for timing and utilization analysis. Literature review for existing all allocators to understand their implementation and pitfalls|
+| 1  | Make the 213 malloc code threadsafe and modify the mdriver to spawn threads for each trace  ✅ | 
+| 2  | Continue to modify driver for timing and utilization analysis. Literature review for existing all allocators to understand their implementation and pitfalls ✅|
 | 3  |Study lock free implementation of stacks and linked lists and integrate the same with the thread-safe malloc code | 
 | 4  | Continue lock-free implementation | 
 | 5  | Optimize and validate the implmentation with the test scripts/ trace files  | 
@@ -43,7 +43,16 @@ We intend to use the GHC machines for development and do a comparison based on a
 
 Following our schedule, we started by modifying the 213 code to setup the infrastructure for further development. The main idea here before trying to implment lock free linked lists was to first implement multithreading by naively locking the data structures. Although the 213 code has mini blocks as well as segmented lists, we use a common global lock to ensure that if each thread picks up a trace and validates it, we are still able to obtain the correct results. After having these global locks for the data structures, the next part of it was to emulate the same for calculating utilization and time taken. Utilization was fairly straightforward as compared to the timing calculation whose implementation in the 213 code was not thread safe. So we went ahead and made it thread safe and compare the serialized code with the multithreaded locked version. The challenging part of it was to understand the mdriver file itself which took us a few days to know what is going on before we could modify it. 
 
-![Thread safe Parallel malloc with mutex](https://user-images.githubusercontent.com/81193326/162853345-e342e38f-a65e-4941-8ce7-9fe0a8e93a33.jpg)
+
+
+| ![SerialPosted](https://user-images.githubusercontent.com/80923050/162853925-5928e09f-f018-4847-a872-803ba451043e.png) |
+|:--:|
+| *Serial malloc implementation results* |
+
+| ![Thread safe Parallel malloc with mutex](https://user-images.githubusercontent.com/81193326/162853345-e342e38f-a65e-4941-8ce7-9fe0a8e93a33.jpg) |
+|:--:|
+| *Thread safe parallel malloc using mutex results* |
+
 
 
 The next part of our work involved studying existing memory allocators. We went through the documentation details regarding the hoard allocator, TCMalloc and JEMalloc. Each of them have slightly different approaches to a common problem of memory allocation taking a very long time and thus creating a bottleneck in terms of performance. Listed below are some of the distinct features and takeaways from studying these allocators.
@@ -86,7 +95,7 @@ We see the progress so far to be on track with respect to what we planned to ach
 
 _Plan to achieve_
 
-1. Write test scripts or modify the existing 213 trace files in order to have a complete testing infrastructure.
+1. Write test scripts or modify the existing 213 trace files in order to have a complete testing infrastructure. ✅
 2. Literature survey on lock free data structures, ABA problem, memory allocators and hazard pointers.
 3. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing.
 4. Try the implmented data structure with machines of different architecutres such as the GHC, PSC, Shark machines.
