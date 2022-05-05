@@ -1,4 +1,10 @@
 # VVMalloc
+
+### Important Links
+Project Demo Video: https://youtu.be/mqXMaoqvUMM <br>
+Project Report: https://github.com/vhkashyap/15618FinalProject/blob/main/15618%20-%20Final%20Project%20Report.pdf <br>
+Project Presentation: https://github.com/vhkashyap/15618FinalProject/blob/main/VVMalloc%20-%20Final%20Presentation.pptx <br>
+
 ## Project Proposal
 ### Summary
 The goal is to implement a parallel version of malloc and compare its speedup with the conventional malloc implementation. This would be done using the GHC machines.
@@ -96,10 +102,10 @@ We see the progress so far to be on track with respect to what we planned to ach
 _Plan to achieve_
 
 1. Write test scripts or modify the existing 213 trace files in order to have a complete testing infrastructure. ✅
-2. Literature survey on lock free data structures, ABA problem, memory allocators and hazard pointers.
-3. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing.
-4. Try the implmented data structure with machines of different architecutres such as the GHC, PSC, Shark machines.
-5. Compare the implementation of our memory allocator with TCMalloc and the baseline implementaion and draw inferences from the same regarding different performance metrics.
+2. Literature survey on lock free data structures, ABA problem, memory allocators and hazard pointers. ✅
+3. Implement a lock free linked list or a linked list with reduced number of locks in a multi threaded environment with sufficient testing. ✅
+4. Try the implmented data structure with machines of different architecutres such as the GHC, PSC, Shark machines. ✅
+5. Compare the implementation of our memory allocator with TCMalloc and the baseline implementaion and draw inferences from the same regarding different performance metrics. ✅
 
 _Hope to achieve_
 
@@ -114,12 +120,12 @@ We see the poster session to be an opportunity for us to explain the different a
 
 | Dates      | Task | Completion status    |
 | :---        |    :----:   |          ---: |
-| 12/4 - 14/4      | Literature review for lock-free implementation to build on PCA lectures    |  |
-| 15/4 - 16/4 | Modifying the baseline implementation of malloc code to adopt CAS implementation        |      |
-| 17/4 - 22/4   | CAS implementation for linked lists and stacks along with tackling the ABA problem       |      |
-| 23/4 - 24/4   | Run performance analysis        |       |
-| 25/4 - 27/4   | Decide further optimizations based on current performance        |      |
-| 28/4 - 29/4   | Write extensive final report        |      |
+| 12/4 - 14/4      | Literature review for lock-free implementation to build on PCA lectures    | ✅ |
+| 15/4 - 16/4 | Modifying the baseline implementation of malloc code to adopt CAS implementation        |   ✅   |
+| 17/4 - 22/4   | CAS implementation for linked lists and stacks along with tackling the ABA problem       |  ✅  |
+| 23/4 - 24/4   | Run performance analysis        |  ✅  |
+| 25/4 - 27/4   | Decide further optimizations based on current performance        |  ✅  |
+| 28/4 - 29/4   | Write extensive final report        |  ✅  |
 
 
 
